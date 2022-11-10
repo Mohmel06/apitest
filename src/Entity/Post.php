@@ -4,19 +4,32 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\PostRepository;
+use App\Controller\PostCountController;
+use App\Controller\PostPublishController;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @ORM\Entity(repositoryClass=PostRepository::class)
  * @ApiResource(
- *    normalizationContext={"groups"={"read:collection"}},
+ *    normalizationContext={
+ *        "groups"={"read:collection"}
+ *    },
  *    denormalizationContext={"groups"={"write:Post"}},
+ *    paginationItemsPerPage= 2,
+ *    paginationMaximumItemsPerPage = 2,
+ *    paginationClientItemsPerPage = true,
+ *    collectionOperations={"get", "post"},
  *    itemOperations={
  *          "put",
  *          "delete",
  *          "get"={
- *              "normalizationContext"={"groups"={"read:collection", "read:item", "read:Post"}}
+ *              "normalizationContext"={
+ *                  "groups"={"read:collection", "read:item", "read:Post"}
+ *              }
  *           }
  *    }
  * )
@@ -66,6 +79,12 @@ class Post
      * @Groups({"read:item", "write:Post"})
      */
     private $category;
+
+    /**
+     * @ORM\Column(type="boolean", options={"default": "0"})
+     * @Groups({"read:collection"})
+     */
+    private $online = false;
 
     public function  __construct () {
         //  $this->CreatedAt = new \DateTime();
@@ -145,6 +164,18 @@ class Post
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function isOnline(): ?bool
+    {
+        return $this->online;
+    }
+
+    public function setOnline(bool $online): self
+    {
+        $this->online = $online;
 
         return $this;
     }
