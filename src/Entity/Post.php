@@ -11,28 +11,59 @@ use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
+use Symfony\Component\Validator\Constraints\Length;
 
 /**
  * @ORM\Entity(repositoryClass=PostRepository::class)
  * @ApiResource(
  *    normalizationContext={
- *        "groups"={"read:collection"}
+ *          "groups"={"read:collection"}
  *    },
  *    denormalizationContext={"groups"={"write:Post"}},
  *    paginationItemsPerPage= 2,
  *    paginationMaximumItemsPerPage = 2,
  *    paginationClientItemsPerPage = true,
- *    collectionOperations={"get", "post"},
+ *    collectionOperations={
+ *          "get", 
+ *          "post",
+ *          "count"= {
+ *              "method"= "GET",
+ *              "path"= "/posts/count",
+ *              "controller"=" PostCountController::class",
+ *              "read"= false,
+ *              "pagination_enabled"= false,
+ *              "filter"={},
+ *          }
+ *    },
  *    itemOperations={
  *          "put",
  *          "delete",
  *          "get"={
  *              "normalizationContext"={
- *                  "groups"={"read:collection", "read:item", "read:Post"}
+ *                  "groups"={"read:collection", "read:item", "read:Post"},
+ *                  "openapi_definition_name"= "Detail"
+ *              }
+ *           },
+ *           "publish"={
+ *              "method" = "POST",
+ *              "patch" = "/posts/{id}/publish",
+ *              "controller" = "PostPublishController::class",
+ *              "openapi_context"= {
+ *                  "summary"= "Permet de publier un article",
+ *                  "requestBody"= {
+ *                      "content"= {
+ *                          "application/jsonld"= {
+ *                              "schema"= {}                              
+ *                          }
+ *                      }
+ *                  }
  *              }
  *           }
  *    }
- * )
+ * ),
+ * @ApiFilter(SearchFilter::class, properties={"id": "exact", "title": "partial"})
+ * @ApiFilter(DateFilter::class, properties={"createdAt"})
  */
 
 class Post
@@ -87,7 +118,7 @@ class Post
     private $online = false;
 
     public function  __construct () {
-        //  $this->CreatedAt = new \DateTime();
+        //  $this->CreatedAt = new \DateTime(); fonction créé pour persister la date de mise à jour
          $this->updateAt = new \DateTime();
      }
 

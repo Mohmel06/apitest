@@ -8,7 +8,7 @@ use ApiPlatform\Core\DataPersister\DataPersisterInterface;
 
 class PostPersister implements DataPersisterInterface
 {
-    //ici nous avons besion 'd'EntityManager pour persister les données
+    //ici nous avons besion 'd'EntityManager pour persister les données,"date de création" de l'article
     protected $em;
     public function __construct(EntityManagerInterface $em)
     {

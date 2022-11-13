@@ -17,7 +17,15 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      itemOperations= {
  *          "put",
  *          "delete",
- *          "patch"
+ *          "patch",
+ *          "get"= {
+ *              "controller"= NotFoundAction::class,
+ *              "openapi_context"={
+ *                  "summary"= "hidden",
+ *              },
+ *              "read"= false,
+ *              "output"= false
+ *          }
  *      } 
  * )
  */

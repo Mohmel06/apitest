@@ -7,7 +7,7 @@ api_platform:
     swagger:
         versions: [3]
             #api_keys:
-               #jwt:
+               #jwt: 
                 #name: Authorization
                 #type: header
 
