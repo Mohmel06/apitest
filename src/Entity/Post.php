@@ -47,13 +47,13 @@ use Symfony\Component\Validator\Constraints\Length;
  *           },
  *           "publish"={
  *              "method" = "POST",
- *              "patch" = "/posts/{id}/publish",
+ *              "path" = "/posts/{id}/publish",
  *              "controller" = "PostPublishController::class",
  *              "openapi_context"= {
  *                  "summary"= "Permet de publier un article",
  *                  "requestBody"= {
  *                      "content"= {
- *                          "application/jsonld"= {
+ *                          "application/json"= {
  *                              "schema"= {}                              
  *                          }
  *                      }

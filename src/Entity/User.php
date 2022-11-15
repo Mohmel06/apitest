@@ -3,14 +3,41 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Controller\MoiController;
 use App\Repository\UserRepository;
+use ApiPlatform\Core\Action\NotFoundAction;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\DependencyInjection\Loader\Configurator\security;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @ApiResource
+ * @ApiResource(
+ *      security= "is_granted('ROLE_USER')",
+ *      collectionOperations={},
+ *      itemOperations={
+ *          "get"={
+ *              "controller"= NotFoundAction::class,
+ *              "openapi_context"={"summary"="hidden"},
+ *              "read"= false,
+ *              "output"= false             
+ *          },
+ *          "moi"={
+ *              "pagination_enabled"= false,
+ *              "path"= "/moi",
+ *              "method"= "get",
+ *              "controller"= MoiController::class,
+ *              "read"= false,
+ *              "openapi_context"={
+ *                  "security"= {"bearerAuth"={}}
+ *              }              
+ *          }     
+
+ *      },
+ *      normalizationContext={"groups"={"read:User"}}
+ * )
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -18,16 +45,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"read:User"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups({"read:User"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
+     * @Groups({"read:User"})
      */
     private $roles = [];
 
