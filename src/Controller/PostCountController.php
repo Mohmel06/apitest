@@ -7,10 +7,10 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PostCountController
 {
-    /**
-     * @var PostRepository
-     */
-    private PostRepository $postRepository;
+   /** 
+    * @var PostRepository 
+    */ 
+//  private PostRepository $postRepository; 
 
     public function __construct(PostRepository $postRepository) {
 

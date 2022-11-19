@@ -4,21 +4,18 @@ namespace App\Controller;
 
 use Symfony\Component\Security\Core\Security;
 
-
-
-
-
 class MoiController
 {
-    /* /** */
-    /*  * @var Security */
-    /*  */ 
-    /* private Security $security; */
+   /*  /** */
+   /*   * @var Security */
+   /*   */ 
+   /*   */
+    private Security $security;
 
 
     public function __construct(Security $security){
 
-        // $this->security = $security;
+       // $this->security = $security;
     }
 
     public function __invoke()

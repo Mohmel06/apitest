@@ -11,7 +11,9 @@
  use ApiPlatform\Core\OpenApi\Factory\OpenApiFactoryInterface; 
  use ApiPlatform\core\OpenApi\OpenApi; 
   
- class OpenApiFactory implements OpenApiFactoryInterface { 
+ class OpenApiFactory implements OpenApiFactoryInterface {
+    
+    private $decorated;
 
     public function __construct(OpenApiFactoryInterface $decorated) { 
         $this->decorated = $decorated; 
@@ -28,7 +30,7 @@
                 $openApi->getPaths()->addPath($key, $path->withGet(null));
             }
         };
-        $openApi->getPaths()->addPath('/ping', new pathItem(null, 'ping', null, new Operation ('ping-id', [], [],'Répond'))); 
+        $openApi->getPaths()->addPath('/test', new pathItem(null, 'test', null, new Operation ('test-id', [], [],'Réponse'))); 
         
             
     
@@ -57,7 +59,7 @@
 
 
         // $pathItem = new PathItem(
-        //     'post', new Operation(
+        //     'post'= new Operation(
         //         'operationId', 'postApiLogin',
         //         'tags', ['User'],
         //         'requestBody', new requestBody(
@@ -71,7 +73,7 @@
         //         ),
         //         'responses', [
         //             '200' =>[
-        //                 'description','Utilisateur connecté',
+        //                 'description'=>'Utilisateur connecté',
         //                 'content'=>[
         //                     'application/json'=> [
         //                         'schema' =>[
@@ -87,7 +89,7 @@
 
 
 
-        $pathItem = new PathItem(null, 'Auth', null, new Operation ('Auth-id', ['User'], [],'connect'));
+        $pathItem = new PathItem(null, 'Auth', null, new Operation ('Auth-id', ['User'], [],'connexion'));
         $openApi->getPaths()->addPath('/api/login', $pathItem);
 
         return $openApi;

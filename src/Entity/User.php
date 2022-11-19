@@ -19,7 +19,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
  *      collectionOperations={},
  *      itemOperations={
  *          "get"={
- *              "controller"= NotFoundAction::class,
+ *              "controller"= "NotFoundAction::class",
  *              "openapi_context"={"summary"="hidden"},
  *              "read"= false,
  *              "output"= false             
@@ -28,7 +28,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
  *              "pagination_enabled"= false,
  *              "path"= "/moi",
  *              "method"= "get",
- *              "controller"= MoiController::class,
+ *              "controller"= "MoiController::class",
  *              "read"= false,
  *              "openapi_context"={
  *                  "security"= {"bearerAuth"={}}

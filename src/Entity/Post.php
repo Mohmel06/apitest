@@ -25,20 +25,53 @@ use Symfony\Component\Validator\Constraints\Length;
  *    paginationMaximumItemsPerPage = 2,
  *    paginationClientItemsPerPage = true,
  *    collectionOperations={
- *          "get", 
+ *          "get"= {
+ *              "openapi_context"= {
+ *                  "security"= {"bearerAuth"={}} 
+ *              }         
+ *          }, 
  *          "post",
  *          "count"= {
- *              "method"= "GET",
+ *              "method"= "get",
  *              "path"= "/posts/count",
- *              "controller"=" PostCountController::class",
+ *              "controller" = "PostCountController::class",
  *              "read"= false,
  *              "pagination_enabled"= false,
  *              "filter"={},
+ *              "openapi_context"= {
+ *                  "summary"= "Récupère le nombre total d\'article",
+ *                  "parameters"={
+ *			            {
+ *                          "in"= "query",
+ *                          "name"= "online",
+ *                          "schema"= {
+ *                              "type"= "integer",
+ *                              "maximum"= 1,
+ *                              "minimum"= 0
+ *                          },
+ *                          "description"= "Filtre les articles en ligne"
+ *			            }
+ *                  },
+ *                  "responses"= {
+ *                      "200"= {
+ *                          "description"= "OK",
+ *                          "content"= {
+ *                               "application/json"= {
+ *                                  "schema"= {
+ *                                      "type"= "integer",
+ *                                      "example"= 2 
+ *                                  }                                      
+ *                               }
+ *                          } 
+ *                      }
+ *                  } 
+ *              }
  *          }
  *    },
  *    itemOperations={
  *          "put",
  *          "delete",
+ *          "patch",
  *          "get"={
  *              "normalizationContext"={
  *                  "groups"={"read:collection", "read:item", "read:Post"},
@@ -118,7 +151,7 @@ class Post
     private $online = false;
 
     public function  __construct () {
-        //  $this->CreatedAt = new \DateTime(); fonction créé pour persister la date de mise à jour
+    //  $this->createdAt = new \DateTime(); fonction '_construct' créé pour persister la date de mise à jour
          $this->updateAt = new \DateTime();
      }
 
