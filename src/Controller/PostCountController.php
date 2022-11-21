@@ -10,7 +10,7 @@ class PostCountController
    /** 
     * @var PostRepository 
     */ 
-//  private PostRepository $postRepository; 
+    private PostRepository $postRepository; 
 
     public function __construct(PostRepository $postRepository) {
 

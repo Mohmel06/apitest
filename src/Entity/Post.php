@@ -17,6 +17,7 @@ use Symfony\Component\Validator\Constraints\Length;
 /**
  * @ORM\Entity(repositoryClass=PostRepository::class)
  * @ApiResource(
+ *    security= "is_granted('ROLE_USER')",
  *    normalizationContext={
  *          "groups"={"read:collection"}
  *    },
@@ -32,14 +33,14 @@ use Symfony\Component\Validator\Constraints\Length;
  *          }, 
  *          "post",
  *          "count"= {
- *              "method"= "get",
+ *              "method"= "GET",
  *              "path"= "/posts/count",
  *              "controller" = "PostCountController::class",
  *              "read"= false,
  *              "pagination_enabled"= false,
  *              "filter"={},
  *              "openapi_context"= {
- *                  "summary"= "Récupère le nombre total d\'article",
+ *                  "summary"= "Récupère le nombre total d'article",
  *                  "parameters"={
  *			            {
  *                          "in"= "query",

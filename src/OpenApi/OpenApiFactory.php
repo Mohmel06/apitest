@@ -59,7 +59,7 @@
 
 
         // $pathItem = new PathItem(
-        //     'post'= new Operation(
+        //     'post', new Operation(
         //         'operationId', 'postApiLogin',
         //         'tags', ['User'],
         //         'requestBody', new requestBody(
